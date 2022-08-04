@@ -1,0 +1,197 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body {
+            margin: 0;
+        }
+
+        header {
+            width: 100%;
+            height: 31px;
+            line-height: 30px;
+            background-color: #E3E4E5;
+        }
+
+        .header_content {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .header_content_left {
+            float: left;
+        }
+
+        .header_content_right {
+            float: right;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            margin: 0;
+            float: left;
+        }
+
+        .line {
+            margin: 8px 10px;
+            width: 0px;
+            height: 10px;
+            border: 1px red solid;
+        }
+
+        .language {
+            box-sizing: border-box;
+            position: relative;
+            cursor: pointer;
+            z-index: 11;
+            float: left;
+        }
+
+        .language:hover .itemlist {
+            display: flex;
+        }
+
+        .currentValue:hover {
+            background-color: white;
+            border: 1px solid rgb(204, 204, 204);
+            border-bottom: none;
+        }
+
+        .currentValue {
+            padding: 0 10px;
+            position: relative;
+            z-index: 999;
+            border: 1px solid transparent;
+            padding-bottom: 1px;
+        }
+
+        .itemlist {
+            border: 1px solid rgb(204, 204, 204);
+            z-index: 998;
+            width: 150px;
+            position: absolute;
+            color: black;
+            top: 31px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .item {
+            border-radius: 10px;
+            height: 28px;
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            /* top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0; */
+            width: 100%;
+            height: 100%;
+            background-color: rgba(29, 38, 45, 0.85);
+            z-index: 1000;
+            display: none;
+        }
+
+        .loadingText {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .yi {
+            font-size: 50px;
+            border: 1px red solid;
+            height: 100px;
+            line-height: 100px;
+            text-align: justify;
+        }
+
+        .er {
+            font-size: 30px;
+        }</style><script defer="defer">window.onload = function () {
+            const selectLang = sessionStorage.getItem('lang') || '简体中文';
+            // menu.onmouseleave = function () {
+            //     menu.style.display = 'none';
+            // };
+            value.innerText = selectLang;
+
+            // lang.onclick = function () {
+            //     const display = menu.style.display;
+            //     menu.style.display = display === 'flex' ? 'none' : 'flex';
+            // }
+            window.onclick = function (even) {
+                console.info(even.target);
+            }
+            let items = Array.from(document.getElementsByClassName('item'));
+            for (const item of items) {
+                item.onclick = () => {
+                    loading.style.display = 'block';
+                    value.innerText = item.innerText;
+                    sessionStorage.setItem('lang', item.innerText);
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                    }, 1500);
+                }
+            }
+        }
+        let fiber = {
+            memoizeState: null,
+        }
+        let workingInProgressHook = null
+        let isMount = true;
+
+        function dispatchAction(queue, action) {
+
+        };
+
+        function useState(init) {
+            // 定义初始hook对象
+            hook = {
+                state: init,
+                next: null,
+                queue: {
+                    pending: null
+                }
+            };
+            if (
+                isMount
+            ) {
+                // 如果filber中不存在hook对象 则把当前hooks
+                if (!fiber.memoizeState) {
+                    // 第一项的next
+                    fiber.next = hook;
+                } else {
+                    // 最后一项的next
+                    workingInProgressHook.next = hook;
+                }
+                // 移动指针指向最后一项
+                workingInProgressHook = hook;
+            } else {
+                // 如果不是初始化，则workingInProgressHook就是当前hooks
+                hook = workingInProgressHook;
+                workingInProgressHook = workingInProgressHook.next;
+            }
+            if (hook.queue.pending) {
+                let firstQueue = hook.queue.pending.next;
+                let baseState = hook.memoizeState;
+                do {
+                    const action = firstQueue.action;
+                    if (typeof action === 'function') {
+                        baseState = action(baseState)
+                    } else {
+                        baseState = action;
+                    }
+                    firstQueue = firstQueue.next;
+                } while (firstQueue !== hook.queue.pending.next);
+            }
+            hook.memoizeState.m
+            return [baseState, dispatchAction.bind(null, workingInProgressHook.queue)]
+        }</script><script defer="defer" src="static/js/runtime~main.2b01aa8aa1.js"></script><script defer="defer" src="static/js/main.5117a77b4c.js"></script><link href="static/css/89544e3c75.css" rel="stylesheet"></head><body><header><div class="header_content"><div id="lang" class="language" tabindex="0"><div id="value" class="currentValue"></div><div id="menu" class="itemlist"><div class="item" role="menuitem" tabindex="0">简体中文</div><div class="item" role="menuitem" tabindex="0">英文</div></div></div><ul class="header_content_right"><li>登录</li><li>免费注册</li><li class="line"></li><li>免费注册</li><li class="line"></li><li>免费注册</li><li class="line"></li><li>免费注册</li><li class="line"></li><li>免费注册</li><li class="line"></li><li>免费注册</li><li class="line"></li><li>免费注册</li><li class="line"></li></ul></div></header><div id="loading" class="loading"><span class="loadingText">Loading...</span></div></body></html>

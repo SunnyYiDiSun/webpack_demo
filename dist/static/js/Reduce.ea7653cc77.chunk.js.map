@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/Reduce.ea7653cc77.chunk.js","mappings":"uHAAA,mBAAgBA,EAAGC,GACf,OAAOD,EAAIC","sources":["webpack://webpack_demo/./src/js/reduce.js"],"sourcesContent":["export default (a, b) => {\r\n    return a - b;\r\n}"],"names":["a","b"],"sourceRoot":""}

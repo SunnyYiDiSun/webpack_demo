@@ -1,0 +1,6 @@
+.box{
+    width: 222px;
+    height: 222px;
+    background-image: url('../img/微信图片_20211126162835.jpg');
+    background-size: cover;
+}
